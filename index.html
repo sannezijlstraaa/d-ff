@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>D/ff Sports Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --p: #3C3489;
+      --pm: #534AB7;
+      --pl: #EEEDFE;
+      --p2: #AFA9EC;
+      --t: #0F6E56;
+      --c: #D85A30;
+      --a: #BA7517;
+      --dark: #0A0A14;
+      --bg: #ffffff;
+      --bg2: #f7f7f5;
+      --text: #1a1a1a;
+      --text2: #6b6b6b;
+      --border: rgba(0,0,0,0.1);
+      --border2: rgba(0,0,0,0.18);
+      --radius: 8px;
+      --radius-lg: 12px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111118;
+        --bg2: #1a1a22;
+        --text: #f0f0f0;
+        --text2: #888;
+        --border: rgba(255,255,255,0.1);
+        --border2: rgba(255,255,255,0.18);
+      }
+    }
+
+    body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--bg); overflow-x: hidden; }
+
+    /* NAV */
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 2.5rem; background: var(--bg); border-bottom: 0.5px solid var(--border); position: sticky; top: 0; z-index: 20; }
+    .logo { font-size: 22px; font-weight: 500; letter-spacing: -0.5px; color: var(--text); text-decoration: none; }
+    .logo span { color: var(--p); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 14px; color: var(--text2); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-btn { background: var(--p); color: var(--pl); border: none; padding: 10px 20px; border-radius: var(--radius); font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; transition: background 0.2s; }
+    .nav-btn:hover { background: #26215C; }
+
+    /* HERO */
+    .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 560px; overflow: hidden; }
+    .hero-left { background: var(--dark); padding: 4rem 2.5rem 3rem; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
+    .hero-glow { position: absolute; top: -60px; left: -60px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(83,74,183,0.35) 0%, transparent 70%); pointer-events: none; }
+    .hero-glow2 { position: absolute; bottom: -40px; right: -40px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(15,110,86,0.25) 0%, transparent 70%); pointer-events: none; }
+    .hero-watermark { position: absolute; bottom: -10px; right: -10px; font-size: 150px; font-weight: 500; letter-spacing: -6px; color: rgba(255,255,255,0.04); pointer-events: none; line-height: 1; z-index: 0; user-select: none; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 6px; background: rgba(83,74,183,0.3); color: #AFA9EC; border: 0.5px solid rgba(83,74,183,0.5); padding: 5px 12px; border-radius: 100px; font-size: 12px; margin-bottom: 1.5rem; width: fit-content; position: relative; z-index: 1; }
+    .hero-dot { width: 6px; height: 6px; background: #AFA9EC; border-radius: 50%; animation: blink 2s infinite; }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .hero-left h1 { font-size: 40px; font-weight: 500; line-height: 1.1; letter-spacing: -1.5px; color: #fff; margin-bottom: 1.25rem; position: relative; z-index: 1; }
+    .hero-left h1 em { font-style: normal; color: #AFA9EC; }
+    .hero-left p { font-size: 15px; color: rgba(255,255,255,0.55); line-height: 1.7; margin-bottom: 2rem; max-width: 380px; position: relative; z-index: 1; }
+    .hero-btns { display: flex; gap: 12px; position: relative; z-index: 1; flex-wrap: wrap; }
+    .btn-w { background: #fff; color: var(--dark); border: none; padding: 12px 22px; border-radius: var(--radius); font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; transition: opacity 0.2s; }
+    .btn-w:hover { opacity: 0.9; }
+    .btn-o { background: transparent; color: rgba(255,255,255,0.7); border: 0.5px solid rgba(255,255,255,0.2); padding: 12px 22px; border-radius: var(--radius); font-size: 14px; cursor: pointer; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
+    .btn-o:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
+
+    .hero-right { display: grid; grid-template-rows: 1fr 1fr; }
+    .hero-panel { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .hero-panel-top { height: 280px; background: #1a1040; }
+    .hero-bottom { display: grid; grid-template-columns: 1fr 1fr; }
+    .hero-panel-bl { height: 280px; background: #0d3d2e; }
+    .hero-panel-br { height: 280px; background: #1a1a2e; }
+    .panel-label { position: absolute; bottom: 14px; left: 14px; font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.75); background: rgba(0,0,0,0.45); padding: 3px 10px; border-radius: 100px; border: 0.5px solid rgba(255,255,255,0.15); letter-spacing: 0.5px; z-index: 2; }
+
+    /* TICKER */
+    .ticker { background: var(--p); color: var(--pl); padding: 12px 0; overflow: hidden; white-space: nowrap; }
+    .ticker-inner { display: inline-block; animation: scroll 22s linear infinite; }
+    @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .ti { display: inline-block; padding: 0 2rem; font-size: 13px; font-weight: 500; letter-spacing: 0.5px; }
+    .td { display: inline-block; width: 4px; height: 4px; background: #AFA9EC; border-radius: 50%; margin-right: 2rem; vertical-align: middle; }
+
+    /* STATS */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 0.5px solid var(--border); }
+    .stat { padding: 2rem 1.5rem; text-align: center; border-right: 0.5px solid var(--border); background: var(--bg); }
+    .stat:last-child { border-right: none; }
+    .sn { font-size: 36px; font-weight: 500; letter-spacing: -1.5px; }
+    .sl { font-size: 12px; color: var(--text2); margin-top: 4px; }
+
+    /* SERVICES */
+    .services { padding: 4rem 2.5rem; }
+    .sec-tag { font-size: 12px; color: var(--pm); margin-bottom: 6px; }
+    .sec-title { font-size: 30px; font-weight: 500; letter-spacing: -0.5px; margin-bottom: 2rem; }
+    .s-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .sc { background: var(--bg); padding: 1.75rem; transition: background 0.2s; }
+    .sc:hover { background: var(--bg2); }
+    .sc-n { font-size: 48px; font-weight: 500; letter-spacing: -2px; opacity: 0.1; margin-bottom: 0.75rem; line-height: 1; }
+    .sc:nth-child(1) .sc-n, .sc:nth-child(5) .sc-n { color: var(--p); }
+    .sc:nth-child(2) .sc-n, .sc:nth-child(6) .sc-n { color: var(--t); }
+    .sc:nth-child(3) .sc-n { color: var(--c); }
+    .sc:nth-child(4) .sc-n { color: var(--a); }
+    .sc-icon { font-size: 22px; margin-bottom: 0.75rem; }
+    .sc:nth-child(1) .sc-icon, .sc:nth-child(5) .sc-icon { color: var(--p); }
+    .sc:nth-child(2) .sc-icon, .sc:nth-child(6) .sc-icon { color: var(--t); }
+    .sc:nth-child(3) .sc-icon { color: var(--c); }
+    .sc:nth-child(4) .sc-icon { color: var(--a); }
+    .sc h3 { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+    .sc p { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+    /* SPORT STRIP */
+    .strip { display: grid; grid-template-columns: repeat(4, 1fr); height: 180px; }
+    .strip-cell { position: relative; display: flex; align-items: flex-end; padding: 14px; }
+    .strip-cell:nth-child(1) { background: linear-gradient(135deg,#1a1040 0%,#3C3489 100%); }
+    .strip-cell:nth-child(2) { background: linear-gradient(135deg,#0d3d2e 0%,#0F6E56 100%); }
+    .strip-cell:nth-child(3) { background: linear-gradient(135deg,#3d1a0d 0%,#D85A30 100%); }
+    .strip-cell:nth-child(4) { background: linear-gradient(135deg,#3d2e0d 0%,#BA7517 100%); }
+    .strip-label { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.9); letter-spacing: 0.5px; position: relative; z-index: 1; }
+    .strip-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -60%); opacity: 0.15; }
+
+    /* FOUNDERS */
+    .founders { padding: 4rem 2.5rem; background: var(--bg2); }
+    .f-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2rem; }
+    .fc { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .fc-img { height: 240px; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .fc-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+    .fc-img.jill { background: linear-gradient(145deg, #26215C 0%, #534AB7 100%); }
+    .fc-img.pien { background: linear-gradient(145deg, #085041 0%, #1D9E75 100%); }
+    .fc-img.boyd { background: linear-gradient(145deg, #2C2C2A 0%, #888780 100%); }
+    .fc-badge { position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.5); color: rgba(255,255,255,0.85); font-size: 11px; padding: 4px 10px; border-radius: 100px; border: 0.5px solid rgba(255,255,255,0.15); z-index: 2; }
+    .fc-body { padding: 1.25rem; }
+    .fc-name { font-size: 18px; font-weight: 500; }
+    .fc-role { font-size: 13px; color: var(--text2); margin-top: 2px; margin-bottom: 10px; }
+    .fc-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .fc-tag { font-size: 11px; padding: 3px 10px; border-radius: 100px; border: 0.5px solid var(--border2); color: var(--text2); }
+
+    /* CTA */
+    .cta { padding: 5rem 2.5rem; background: var(--dark); position: relative; overflow: hidden; text-align: center; }
+    .cta-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 500px; height: 500px; background: radial-gradient(circle, rgba(83,74,183,0.18) 0%, transparent 65%); pointer-events: none; }
+    .cta h2 { font-size: 40px; font-weight: 500; letter-spacing: -1.5px; color: #fff; margin-bottom: 1rem; position: relative; z-index: 1; }
+    .cta h2 em { font-style: normal; color: #AFA9EC; }
+    .cta p { font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.7; max-width: 440px; margin: 0 auto 2rem; position: relative; z-index: 1; }
+    .cta-row { display: flex; gap: 12px; justify-content: center; position: relative; z-index: 1; flex-wrap: wrap; }
+    .cta-inp { background: rgba(255,255,255,0.08); border: 0.5px solid rgba(255,255,255,0.15); color: #fff; padding: 12px 18px; border-radius: var(--radius); font-size: 14px; width: 260px; font-family: inherit; }
+    .cta-inp::placeholder { color: rgba(255,255,255,0.35); }
+    .cta-sub { background: var(--pm); color: var(--pl); border: none; padding: 12px 22px; border-radius: var(--radius); font-size: 14px; font-weight: 500; cursor: pointer; font-family: inherit; transition: background 0.2s; }
+    .cta-sub:hover { background: var(--p); }
+
+    /* FOOTER */
+    .footer { padding: 1.5rem 2.5rem; border-top: 0.5px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text2); flex-wrap: wrap; gap: 1rem; }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-links a { color: inherit; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding: 3rem 1.5rem; }
+      .hero-left h1 { font-size: 32px; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .stat:nth-child(2) { border-right: none; }
+      .services { padding: 3rem 1.25rem; }
+      .s-grid { grid-template-columns: 1fr; }
+      .strip { grid-template-columns: repeat(2, 1fr); height: auto; }
+      .strip-cell { height: 120px; }
+      .founders { padding: 3rem 1.25rem; }
+      .f-grid { grid-template-columns: 1fr; }
+      .cta { padding: 3.5rem 1.25rem; }
+      .cta h2 { font-size: 28px; }
+      .cta-inp { width: 100%; }
+      .footer { padding: 1.5rem 1.25rem; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="#" class="logo">D<span>/</span>ff</a>
+    <ul class="nav-links">
+      <li><a href="#diensten">Diensten</a></li>
+      <li><a href="#sporters">Sporters</a></li>
+      <li><a href="#oprichters">Over ons</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-btn">Sluit je aan →</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-glow"></div>
+      <div class="hero-glow2"></div>
+      <div class="hero-watermark" aria-hidden="true">D/ff</div>
+      <div class="hero-tag"><span class="hero-dot"></span> Nu actief in Nederland</div>
+      <h1>Sport op het hoogste niveau.<br><em>Management ook.</em></h1>
+      <p>D/ff is een nieuw sport management agency, opgericht door topsporters. Wij begeleiden sporters op elk niveau — van contract tot campagne.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-w">Sluit je aan ↗</a>
+        <a href="#oprichters" class="btn-o">Meer over ons</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-panel hero-panel-top">
+        <svg width="320" height="180" viewBox="0 0 320 180" fill="none" aria-hidden="true">
+          <circle cx="160" cy="90" r="60" stroke="rgba(174,169,236,0.2)" stroke-width="1.5"/>
+          <circle cx="160" cy="90" r="40" stroke="rgba(174,169,236,0.3)" stroke-width="1"/>
+          <line x1="100" y1="90" x2="220" y2="90" stroke="rgba(174,169,236,0.2)" stroke-width="1"/>
+          <line x1="160" y1="30" x2="160" y2="150" stroke="rgba(174,169,236,0.2)" stroke-width="1"/>
+          <circle cx="160" cy="90" r="8" fill="rgba(174,169,236,0.5)"/>
+          <path d="M130 60 Q160 45 190 60 Q210 75 200 90 Q190 105 160 100 Q130 105 120 90 Q110 75 130 60Z" stroke="rgba(174,169,236,0.25)" stroke-width="1" fill="none"/>
+        </svg>
+        <div class="panel-label">⚽ VOETBAL</div>
+      </div>
+      <div class="hero-bottom">
+        <div class="hero-panel hero-panel-bl">
+          <svg width="140" height="140" viewBox="0 0 140 140" fill="none" aria-hidden="true">
+            <rect x="20" y="20" width="100" height="100" rx="4" stroke="rgba(29,158,117,0.3)" stroke-width="1.5" fill="none"/>
+            <line x1="20" y1="70" x2="120" y2="70" stroke="rgba(29,158,117,0.2)" stroke-width="1"/>
+            <line x1="70" y1="20" x2="70" y2="120" stroke="rgba(29,158,117,0.2)" stroke-width="1"/>
+            <circle cx="70" cy="70" r="20" stroke="rgba(29,158,117,0.35)" stroke-width="1.5" fill="none"/>
+            <circle cx="70" cy="70" r="5" fill="rgba(29,158,117,0.5)"/>
+            <rect x="20" y="45" width="12" height="50" rx="2" fill="rgba(29,158,117,0.3)"/>
+            <rect x="108" y="45" width="12" height="50" rx="2" fill="rgba(29,158,117,0.3)"/>
+          </svg>
+          <div class="panel-label">🏑 HOCKEY</div>
+        </div>
+        <div class="hero-panel hero-panel-br">
+          <svg width="140" height="140" viewBox="0 0 140 140" fill="none" aria-hidden="true">
+            <path d="M40 110 L70 30 L100 110" stroke="rgba(83,74,183,0.4)" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M50 85 L90 85" stroke="rgba(83,74,183,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="70" cy="26" r="10" stroke="rgba(83,74,183,0.4)" stroke-width="1.5" fill="none"/>
+          </svg>
+          <div class="panel-label">🏃 ATLETIEK</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-inner">
+      <span class="ti">ATLETENMANAGEMENT</span><span class="td"></span>
+      <span class="ti">MERKPARTNERSHIPS</span><span class="td"></span>
+      <span class="ti">MEDIA &amp; COMMUNICATIE</span><span class="td"></span>
+      <span class="ti">CONTRACTEN</span><span class="td"></span>
+      <span class="ti">PERSOONLIJKE BEGELEIDING</span><span class="td"></span>
+      <span class="ti">MAATSCHAPPELIJKE IMPACT</span><span class="td"></span>
+      <span class="ti">ATLETENMANAGEMENT</span><span class="td"></span>
+      <span class="ti">MERKPARTNERSHIPS</span><span class="td"></span>
+      <span class="ti">MEDIA &amp; COMMUNICATIE</span><span class="td"></span>
+      <span class="ti">CONTRACTEN</span><span class="td"></span>
+      <span class="ti">PERSOONLIJKE BEGELEIDING</span><span class="td"></span>
+      <span class="ti">MAATSCHAPPELIJKE IMPACT</span><span class="td"></span>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="sn" style="color:var(--p)">3</div><div class="sl">Oprichters op topsportniveau</div></div>
+    <div class="stat"><div class="sn" style="color:var(--t)">2×</div><div class="sl">Olympisch kampioenschap</div></div>
+    <div class="stat"><div class="sn" style="color:var(--c)">NL</div><div class="sl">Gericht op Nederlandse sporters</div></div>
+    <div class="stat"><div class="sn" style="color:var(--a)">100%</div><div class="sl">Persoonlijke aandacht</div></div>
+  </div>
+
+  <section class="services" id="diensten">
+    <div class="sec-tag">Wat wij doen</div>
+    <div class="sec-title">Meer dan management</div>
+    <div class="s-grid">
+      <div class="sc">
+        <div class="sc-n">01</div>
+        <div class="sc-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+        </div>
+        <h3>Atletenmanagement</h3>
+        <p>Contractonderhandelingen, loopbaanplanning en persoonlijke begeleiding op en naast het veld.</p>
+      </div>
+      <div class="sc">
+        <div class="sc-n">02</div>
+        <div class="sc-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <h3>Merkpartnerships</h3>
+        <p>Wij verbinden sporters met merken die bij hen passen. Authentiek, langdurig, impactvol.</p>
+      </div>
+      <div class="sc">
+        <div class="sc-n">03</div>
+        <div class="sc-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.09 6.09l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+        </div>
+        <h3>Media &amp; communicatie</h3>
+        <p>Social strategy, perswoordvoering en het opbouwen van jouw persoonlijk merk.</p>
+      </div>
+      <div class="sc">
+        <div class="sc-n">04</div>
+        <div class="sc-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        </div>
+        <h3>Commerciële groei</h3>
+        <p>Inkomsten optimaliseren en kansen identificeren buiten de sport voor jouw toekomst.</p>
+      </div>
+      <div class="sc">
+        <div class="sc-n">05</div>
+        <div class="sc-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        </div>
+        <h3>Juridisch &amp; contracten</h3>
+        <p>Professionele begeleiding bij sponsorcontracten, licenties en juridische kwesties.</p>
+      </div>
+      <div class="sc">
+        <div class="sc-n">06</div>
+        <div class="sc-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <h3>Maatschappelijke impact</h3>
+        <p>Jouw platform inzetten voor community, purpose en zichtbaarheid die ertoe doet.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip" id="sporters">
+    <div class="strip-cell">
+      <svg class="strip-icon" viewBox="0 0 60 60" width="60" height="60" fill="none" aria-hidden="true">
+        <circle cx="30" cy="30" r="24" stroke="white" stroke-width="1.5"/>
+        <path d="M18 18 Q30 12 42 18 Q50 25 46 30 Q42 38 30 36 Q18 38 14 30 Q10 25 18 18Z" stroke="white" stroke-width="1" fill="none"/>
+      </svg>
+      <span class="strip-label">⚽ Voetbal</span>
+    </div>
+    <div class="strip-cell">
+      <svg class="strip-icon" viewBox="0 0 60 60" width="60" height="60" fill="none" aria-hidden="true">
+        <rect x="8" y="8" width="44" height="44" rx="2" stroke="white" stroke-width="1.5" fill="none"/>
+        <circle cx="30" cy="30" r="10" stroke="white" stroke-width="1" fill="none"/>
+        <line x1="8" y1="30" x2="52" y2="30" stroke="white" stroke-width="1"/>
+      </svg>
+      <span class="strip-label">🏑 Hockey</span>
+    </div>
+    <div class="strip-cell">
+      <svg class="strip-icon" viewBox="0 0 60 60" width="60" height="60" fill="none" aria-hidden="true">
+        <path d="M20 48 L30 14 L40 48" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M24 36 L36 36" stroke="white" stroke-width="1" stroke-linecap="round"/>
+        <circle cx="30" cy="10" r="5" stroke="white" stroke-width="1.5" fill="none"/>
+      </svg>
+      <span class="strip-label">🏃 Atletiek</span>
+    </div>
+    <div class="strip-cell">
+      <svg class="strip-icon" viewBox="0 0 60 60" width="60" height="60" fill="none" aria-hidden="true">
+        <path d="M10 45 L22 28 L34 35 L46 15" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="46" cy="15" r="4" fill="white" opacity="0.5"/>
+      </svg>
+      <span class="strip-label">📈 En meer</span>
+    </div>
+  </div>
+
+  <section class="founders" id="oprichters">
+    <div class="sec-tag">De oprichters</div>
+    <div class="sec-title">Opgericht door kampioenen</div>
+    <div class="f-grid">
+      <div class="fc">
+        <div class="fc-img jill">
+          <!--
+            Om een echte foto toe te voegen, vervang de SVG hieronder door:
+            <img src="images/jill-roord.jpg" alt="Jill Roord">
+          -->
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+            <circle cx="60" cy="42" r="22" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none"/>
+            <path d="M20 105 Q20 75 60 75 Q100 75 100 105" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none"/>
+            <circle cx="60" cy="42" r="14" fill="rgba(255,255,255,0.1)"/>
+          </svg>
+          <div class="fc-badge">⚽ Voetbal</div>
+        </div>
+        <div class="fc-body">
+          <div class="fc-name">Jill Roord</div>
+          <div class="fc-role">Medeoprichter · Profvoetbalster</div>
+          <div class="fc-tags">
+            <span class="fc-tag">FC Twente</span>
+            <span class="fc-tag">Oranje</span>
+            <span class="fc-tag">UEFA Euro 2017</span>
+          </div>
+        </div>
+      </div>
+      <div class="fc">
+        <div class="fc-img pien">
+          <!--
+            Om een echte foto toe te voegen, vervang de SVG hieronder door:
+            <img src="images/pien-sanders.jpg" alt="Pien Sanders">
+          -->
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+            <circle cx="60" cy="42" r="22" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none"/>
+            <path d="M20 105 Q20 75 60 75 Q100 75 100 105" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none"/>
+            <circle cx="60" cy="42" r="14" fill="rgba(255,255,255,0.1)"/>
+          </svg>
+          <div class="fc-badge">🏑 Hockey</div>
+        </div>
+        <div class="fc-body">
+          <div class="fc-name">Pien Sanders</div>
+          <div class="fc-role">Medeoprichter · Profhockeyster</div>
+          <div class="fc-tags">
+            <span class="fc-tag">Oranje Dames</span>
+            <span class="fc-tag">Olympisch kampioen</span>
+          </div>
+        </div>
+      </div>
+      <div class="fc">
+        <div class="fc-img boyd">
+          <!--
+            Om een echte foto toe te voegen, vervang de SVG hieronder door:
+            <img src="images/boyd-rood.jpg" alt="Boyd Rood">
+          -->
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+            <circle cx="60" cy="42" r="22" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none"/>
+            <path d="M20 105 Q20 75 60 75 Q100 75 100 105" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none"/>
+            <circle cx="60" cy="42" r="14" fill="rgba(255,255,255,0.1)"/>
+          </svg>
+          <div class="fc-badge">💼 Business</div>
+        </div>
+        <div class="fc-body">
+          <div class="fc-name">Boyd Rood</div>
+          <div class="fc-role">Medeoprichter · Ondernemer</div>
+          <div class="fc-tags">
+            <span class="fc-tag">Strategie</span>
+            <span class="fc-tag">Groei</span>
+            <span class="fc-tag">Sport business</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="contact">
+    <div class="cta-glow" aria-hidden="true"></div>
+    <h2>Klaar voor het <em>verschil</em>?</h2>
+    <p>Ben jij topsporter in Nederland en wil je jouw carrière naar een hoger niveau tillen? D/ff staat voor je klaar.</p>
+    <div class="cta-row">
+      <input class="cta-inp" type="email" placeholder="jouw@email.nl" aria-label="E-mailadres" />
+      <button class="cta-sub" type="button">Stuur bericht ↗</button>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <a href="#" class="logo" style="font-size:15px">D<span>/</span>ff Sports Management</a>
+    <ul class="footer-links">
+      <li><a href="#">Instagram</a></li>
+      <li><a href="#">LinkedIn</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#">Privacy</a></li>
+    </ul>
+    <div>© 2024 D/ff</div>
+  </footer>
+
+</body>
+</html>
